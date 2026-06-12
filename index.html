@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="Personal website for Lee Seojun, with profile, selected links, and CV."
+      content="Personal website for Lee Seojun with an about section, projects, CV, planned courses, contact links, and AI usage disclosure."
     >
     <title>Lee Seojun | Personal Website</title>
     <style>
@@ -140,7 +140,7 @@
       .primary-nav {
         min-height: 64px;
         display: grid;
-        grid-template-columns: minmax(96px, 1fr) auto minmax(240px, 1fr);
+        grid-template-columns: auto minmax(0, 1fr);
         align-items: center;
         gap: 24px;
       }
@@ -159,11 +159,17 @@
       .nav-links {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 28px;
+        justify-content: flex-end;
+        gap: clamp(14px, 2vw, 28px);
         margin: 0;
         padding: 0;
         list-style: none;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
       }
 
       .nav-links a {
@@ -173,6 +179,7 @@
         border-bottom: 2px solid transparent;
         font-weight: 500;
         text-decoration: none;
+        white-space: nowrap;
       }
 
       .nav-links a:hover,
@@ -378,6 +385,7 @@
         padding: 8px 16px;
         font-weight: 500;
         line-height: 1.5;
+        text-decoration: none;
       }
 
       .chip.active {
@@ -453,9 +461,16 @@
         margin-bottom: 0;
       }
 
+      .section-lead {
+        max-width: 72ch;
+        margin: 0;
+        color: var(--charcoal);
+        font-size: 18px;
+      }
+
       .product-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
         margin: 0;
         padding: 0;
@@ -578,6 +593,65 @@
         font-weight: 500;
       }
 
+      .course-list {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        margin: 24px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .course-list li {
+        min-height: 96px;
+        display: flex;
+        align-items: flex-end;
+        border-top: 1px solid var(--hairline);
+        background: var(--soft-cloud);
+        padding: 16px;
+        font-weight: 500;
+      }
+
+      .contact-list,
+      .ai-usage-list {
+        margin: 0;
+        border-top: 1px solid var(--hairline);
+      }
+
+      .contact-row,
+      .ai-row {
+        display: grid;
+        grid-template-columns: 140px minmax(0, 1fr);
+        gap: 24px;
+        border-bottom: 1px solid var(--hairline);
+        padding: 20px 0;
+      }
+
+      .contact-row dt,
+      .ai-row dt {
+        color: var(--mute);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .contact-row dd,
+      .ai-row dd {
+        margin: 0;
+        min-width: 0;
+        font-weight: 500;
+      }
+
+      .ai-prompt {
+        margin: 0;
+        padding: 16px;
+        overflow-wrap: anywhere;
+        background: var(--soft-cloud);
+        color: var(--charcoal);
+        font: inherit;
+        font-weight: 500;
+        white-space: pre-wrap;
+      }
+
       .resume-tile {
         position: relative;
         min-height: 340px;
@@ -672,18 +746,12 @@
         }
 
         .primary-nav {
-          grid-template-columns: auto 1fr auto;
+          grid-template-columns: auto minmax(0, 1fr);
         }
 
         .nav-links {
           justify-content: flex-start;
           gap: 18px;
-          overflow-x: auto;
-          scrollbar-width: none;
-        }
-
-        .nav-links::-webkit-scrollbar {
-          display: none;
         }
 
         .profile-layout,
@@ -692,6 +760,10 @@
         }
 
         .product-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .course-list {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
@@ -743,7 +815,10 @@
 
         .profile-layout,
         .product-grid,
-        .footer-grid {
+        .footer-grid,
+        .course-list,
+        .contact-row,
+        .ai-row {
           grid-template-columns: 1fr;
         }
 
@@ -781,8 +856,8 @@
           <span class="utility-left">HILEE0941.github.io</span>
           <div class="utility-links" aria-label="Utility links">
             <a href="https://github.com/HILEE0941" rel="me">GitHub</a>
-            <a href="assets/cv.pdf">CV</a>
-            <a href="#links">Contact</a>
+            <a href="assets/cv.pdf">CV / Resume</a>
+            <a href="#contact">Contact</a>
           </div>
         </div>
       </div>
@@ -790,18 +865,13 @@
       <nav class="primary-nav frame" aria-label="Primary navigation">
         <a class="brand-mark" href="#main" aria-label="Lee Seojun home">LS</a>
         <ul class="nav-links">
-          <li><a href="#about" aria-current="page">About</a></li>
-          <li><a href="#focus">Focus</a></li>
-          <li><a href="#links">Links</a></li>
-          <li><a href="#resume">CV</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#cv-resume">CV / Resume</a></li>
+          <li><a href="#courses-planned">Courses Planned</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#ai-usage">AI Usage</a></li>
         </ul>
-        <div class="nav-actions">
-          <form class="search-pill" action="#links" role="search">
-            <label class="visually-hidden" for="site-search">Search profile</label>
-            <input id="site-search" name="q" type="search" placeholder="Search">
-          </form>
-          <a class="icon-link" href="assets/cv.pdf" aria-label="Open CV">CV</a>
-        </div>
       </nav>
     </header>
 
@@ -822,18 +892,19 @@
               about clear interfaces, reliable tools, and software that is easy
               to keep improving.
             </p>
-            <a class="button on-image" href="assets/cv.pdf">View CV</a>
+            <a class="button on-image" href="#cv-resume">View CV</a>
           </div>
         </section>
       </div>
 
       <section class="quick-filter frame" aria-label="Profile topics">
         <ul class="chip-row">
-          <li class="chip active">Profile</li>
-          <li class="chip">Web Experiences</li>
-          <li class="chip">Useful Tools</li>
-          <li class="chip">Documentation</li>
-          <li class="chip">CV</li>
+          <li><a class="chip active" href="#about">About Me</a></li>
+          <li><a class="chip" href="#projects">Projects</a></li>
+          <li><a class="chip" href="#cv-resume">CV / Resume</a></li>
+          <li><a class="chip" href="#courses-planned">Courses Planned</a></li>
+          <li><a class="chip" href="#contact">Contact</a></li>
+          <li><a class="chip" href="#ai-usage">AI Usage</a></li>
         </ul>
       </section>
 
@@ -841,7 +912,7 @@
         <div class="section-head">
           <div>
             <p class="section-kicker">Short profile</p>
-            <h2 id="about-title">About</h2>
+            <h2 id="about-title">About Me</h2>
           </div>
         </div>
 
@@ -859,6 +930,10 @@
               <dt>Document</dt>
               <dd><a href="assets/cv.pdf">CV PDF</a></dd>
             </div>
+            <div class="meta-row">
+              <dt>Email</dt>
+              <dd><a href="mailto:late0424@snu.ac.kr">late0424@snu.ac.kr</a></dd>
+            </div>
           </dl>
 
           <div class="about-copy">
@@ -874,21 +949,21 @@
         </div>
       </section>
 
-      <section class="content-section frame" id="focus" aria-labelledby="focus-title">
+      <section class="content-section frame" id="projects" aria-labelledby="projects-title">
         <div class="section-head">
           <div>
-            <p class="section-kicker">Selected focus</p>
-            <h2 id="focus-title">What I Work On</h2>
+            <p class="section-kicker">Selected work</p>
+            <h2 id="projects-title">Projects</h2>
           </div>
-          <a class="section-link" href="#links">See links</a>
+          <a class="section-link" href="#contact">Get in touch</a>
         </div>
 
         <ul class="product-grid">
           <li>
             <article class="product-card">
               <div class="product-media wordmark">
-                <span class="badge">Focus</span>
-                <span class="display-word">Web</span>
+                <span class="badge">Game</span>
+                <span class="display-word">Pacman</span>
               </div>
               <div class="product-meta">
                 <div class="swatches" aria-hidden="true">
@@ -896,16 +971,16 @@
                   <span class="swatch soft"></span>
                   <span class="swatch teal"></span>
                 </div>
-                <h3>Web Experiences</h3>
-                <p>Responsive pages and interfaces that work well across devices.</p>
+                <h3>Pacman Project</h3>
+                <p>A browser-based Pacman project focused on movement, collision logic, and responsive gameplay.</p>
               </div>
             </article>
           </li>
           <li>
             <article class="product-card">
               <div class="product-media wordmark dark">
-                <span class="badge">Tools</span>
-                <span class="display-word">Build</span>
+                <span class="badge">Puzzle</span>
+                <span class="display-word">Wordle</span>
               </div>
               <div class="product-meta">
                 <div class="swatches" aria-hidden="true">
@@ -913,56 +988,15 @@
                   <span class="swatch teal"></span>
                   <span class="swatch pink"></span>
                 </div>
-                <h3>Useful Tools</h3>
-                <p>Small, dependable software that supports real workflows.</p>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="product-card">
-              <div class="product-media wordmark">
-                <span class="badge">Notes</span>
-                <span class="display-word">Docs</span>
-              </div>
-              <div class="product-meta">
-                <div class="swatches" aria-hidden="true">
-                  <span class="swatch soft"></span>
-                  <span class="swatch"></span>
-                  <span class="swatch teal"></span>
-                </div>
-                <h3>Clear Documentation</h3>
-                <p>Notes and project summaries that make work easier to understand.</p>
+                <h3>Wordle Project</h3>
+                <p>A word puzzle project that practices input handling, answer checking, feedback states, and clean UI updates.</p>
               </div>
             </article>
           </li>
         </ul>
       </section>
 
-      <section class="content-section frame" id="links" aria-labelledby="links-title">
-        <div class="section-head">
-          <div>
-            <p class="section-kicker">Selected destinations</p>
-            <h2 id="links-title">Links</h2>
-          </div>
-        </div>
-
-        <div class="disclosure-list">
-          <a class="disclosure-row" href="https://github.com/HILEE0941" rel="me">
-            <span>GitHub</span>
-            <span>Code and public repositories</span>
-          </a>
-          <a class="disclosure-row" href="assets/cv.pdf">
-            <span>CV</span>
-            <span>Open PDF</span>
-          </a>
-          <a class="disclosure-row" href="assets/cv.pdf">
-            <span>Contact</span>
-            <span>Details listed in CV</span>
-          </a>
-        </div>
-      </section>
-
-      <section class="content-section frame" id="resume" aria-labelledby="resume-title">
+      <section class="content-section frame" id="cv-resume" aria-labelledby="cv-resume-title">
         <div class="resume-tile">
           <img
             src="assets/profile.jpg"
@@ -973,7 +1007,7 @@
           >
           <div class="resume-copy">
             <p class="section-kicker">Document</p>
-            <h2 id="resume-title">CV</h2>
+            <h2 id="cv-resume-title">CV / Resume</h2>
             <p>
               My resume is available as a PDF and can be opened directly in the
               browser or downloaded for later.
@@ -982,6 +1016,69 @@
           </div>
         </div>
       </section>
+
+      <section class="content-section frame" id="courses-planned" aria-labelledby="courses-planned-title">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Academic plan</p>
+            <h2 id="courses-planned-title">Courses Planned</h2>
+          </div>
+        </div>
+
+        <p class="section-lead">
+          I plan to study these subjects to strengthen my foundation in computer
+          science and AI.
+        </p>
+        <ul class="course-list" aria-label="Planned courses">
+          <li>Engineering Mathematics 2</li>
+          <li>Data Structure</li>
+          <li>Computer Structure</li>
+          <li>Operating Systems</li>
+          <li>Artificial Intelligence</li>
+        </ul>
+      </section>
+
+      <section class="content-section frame" id="contact" aria-labelledby="contact-title">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Contact details</p>
+            <h2 id="contact-title">Contact</h2>
+          </div>
+        </div>
+
+        <dl class="contact-list">
+          <div class="contact-row">
+            <dt>Email</dt>
+            <dd><a href="mailto:late0424@snu.ac.kr">late0424@snu.ac.kr</a></dd>
+          </div>
+          <div class="contact-row">
+            <dt>GitHub</dt>
+            <dd><a href="https://github.com/HILEE0941" rel="me">github.com/HILEE0941</a></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="content-section frame" id="ai-usage" aria-labelledby="ai-usage-title">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Disclosure</p>
+            <h2 id="ai-usage-title">AI Usage</h2>
+          </div>
+        </div>
+
+        <dl class="ai-usage-list">
+          <div class="ai-row">
+            <dt>Tool</dt>
+            <dd>Codex</dd>
+          </div>
+          <div class="ai-row">
+            <dt>Prompt</dt>
+            <dd>
+              <p class="ai-prompt">Review my GitHub Pages website and update it so that it fully satisfies all Lab 12 requirements. Create a top navigation menu linking to About Me, Projects, CV/Resume, Courses Planned, Contact, and AI Usage. Add at least two projects (Pacman Project and Wordle Project), a Courses Planned section containing Engineering Mathematics 2, Data Structure, Computer Structure, Operating Systems, and Artificial Intelligence, a Contact section, and an AI Usage section. Ensure all navigation links work correctly and keep the site responsive, accessible, and compatible with GitHub Pages.</p>
+            </dd>
+          </div>
+        </dl>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -989,26 +1086,29 @@
         <section class="footer-column" aria-labelledby="footer-profile">
           <h2 id="footer-profile">Profile</h2>
           <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#focus">Focus</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#projects">Projects</a></li>
           </ul>
         </section>
         <section class="footer-column" aria-labelledby="footer-docs">
           <h2 id="footer-docs">Documents</h2>
           <ul>
-            <li><a href="assets/cv.pdf">CV PDF</a></li>
+            <li><a href="#cv-resume">CV / Resume</a></li>
+            <li><a href="assets/cv.pdf">Download CV PDF</a></li>
           </ul>
         </section>
         <section class="footer-column" aria-labelledby="footer-elsewhere">
-          <h2 id="footer-elsewhere">Elsewhere</h2>
+          <h2 id="footer-elsewhere">Planning</h2>
           <ul>
-            <li><a href="https://github.com/HILEE0941" rel="me">GitHub</a></li>
+            <li><a href="#courses-planned">Courses Planned</a></li>
+            <li><a href="#ai-usage">AI Usage</a></li>
           </ul>
         </section>
         <section class="footer-column" aria-labelledby="footer-contact">
           <h2 id="footer-contact">Contact</h2>
           <ul>
-            <li><a href="assets/cv.pdf">See CV</a></li>
+            <li><a href="#contact">Contact Section</a></li>
+            <li><a href="https://github.com/HILEE0941" rel="me">GitHub</a></li>
           </ul>
         </section>
       </div>
