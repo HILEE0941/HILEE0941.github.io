@@ -11,17 +11,26 @@
     <style>
       :root {
         color-scheme: light;
-        --bg: #fbfaf7;
-        --surface: #ffffff;
-        --text: #1d1d1f;
-        --muted: #5d6573;
-        --line: #d9dde4;
-        --accent: #0b6b61;
-        --accent-strong: #084c45;
-        --accent-soft: #dcefed;
-        --warm: #b84f2a;
-        --shadow: 0 18px 40px rgba(29, 29, 31, 0.08);
-        --max-width: 1080px;
+        --ink: #111111;
+        --canvas: #ffffff;
+        --soft-cloud: #f5f5f5;
+        --charcoal: #39393b;
+        --mute: #707072;
+        --stone: #9e9ea0;
+        --hairline: #cacacb;
+        --hairline-soft: #e5e5e5;
+        --sale: #d30005;
+        --success: #007d48;
+        --accent-teal: #0a7281;
+        --accent-pink: #ed1aa0;
+        --display:
+          "Bebas Neue", "Anton", "Arial Black", Impact, "Helvetica Neue",
+          Arial, sans-serif;
+        --ui:
+          Inter, "Helvetica Now Text", "Helvetica Neue", Arial, sans-serif;
+        --max-width: 1440px;
+        --gutter: clamp(16px, 4vw, 80px);
+        --section: clamp(32px, 5vw, 48px);
       }
 
       * {
@@ -34,316 +43,731 @@
 
       body {
         margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: var(--ui);
         font-size: 16px;
-        line-height: 1.6;
+        line-height: 1.5;
       }
 
       a {
-        color: var(--accent-strong);
+        color: inherit;
         text-underline-offset: 0.18em;
       }
 
       a:focus-visible,
-      button:focus-visible {
-        outline: 3px solid var(--warm);
+      input:focus-visible {
+        outline: 2px solid var(--ink);
         outline-offset: 4px;
+        box-shadow: 0 0 0 12px var(--soft-cloud);
       }
 
       img {
         display: block;
-        max-width: 100%;
+        width: 100%;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        border: 0;
+        white-space: nowrap;
       }
 
       .skip-link {
         position: absolute;
-        left: 1rem;
-        top: 1rem;
-        z-index: 20;
-        transform: translateY(-150%);
-        background: var(--text);
-        color: #fff;
-        padding: 0.65rem 0.85rem;
-        border-radius: 8px;
+        top: 12px;
+        left: 12px;
+        z-index: 50;
+        transform: translateY(-160%);
+        background: var(--ink);
+        color: var(--canvas);
+        border-radius: 9999px;
+        padding: 12px 24px;
+        font-weight: 500;
+        text-decoration: none;
       }
 
       .skip-link:focus {
         transform: translateY(0);
       }
 
+      .frame {
+        max-width: calc(var(--max-width) + (var(--gutter) * 2));
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+
       .site-header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        background: rgba(251, 250, 247, 0.92);
-        border-bottom: 1px solid var(--line);
-        backdrop-filter: blur(14px);
+        z-index: 20;
+        background: var(--canvas);
+        box-shadow: inset 0 -1px 0 var(--hairline-soft);
       }
 
-      .nav {
-        width: min(100% - 2rem, var(--max-width));
-        margin: 0 auto;
+      .utility-bar {
+        background: var(--soft-cloud);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .utility-inner {
+        min-height: 36px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
-        padding: 0.95rem 0;
+        gap: 24px;
       }
 
-      .brand {
-        color: var(--text);
-        font-weight: 700;
-        text-decoration: none;
-        white-space: nowrap;
-      }
-
-      .nav ul {
+      .utility-links {
         display: flex;
         align-items: center;
-        gap: 0.35rem;
-        list-style: none;
-        margin: 0;
-        padding: 0;
+        gap: 18px;
       }
 
-      .nav a {
-        border-radius: 8px;
-        color: var(--text);
-        padding: 0.5rem 0.65rem;
+      .utility-links a {
         text-decoration: none;
       }
 
-      .nav a:hover {
-        background: var(--accent-soft);
-      }
-
-      main {
-        width: min(100% - 2rem, var(--max-width));
-        margin: 0 auto;
-      }
-
-      .hero {
+      .primary-nav {
+        min-height: 64px;
         display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
-        gap: clamp(2rem, 6vw, 5rem);
+        grid-template-columns: minmax(96px, 1fr) auto minmax(240px, 1fr);
         align-items: center;
-        padding: clamp(3rem, 7vw, 6.5rem) 0 clamp(2.5rem, 6vw, 5rem);
+        gap: 24px;
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        display: inline-grid;
+        place-items: center;
+        background: var(--ink);
+        color: var(--canvas);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .nav-links a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 56px;
+        border-bottom: 2px solid transparent;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      .nav-links a:hover,
+      .nav-links a[aria-current="page"] {
+        border-bottom-color: var(--ink);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+
+      .search-pill {
+        width: min(230px, 100%);
+        height: 40px;
+        display: flex;
+        align-items: center;
+        background: var(--soft-cloud);
+        border-radius: 24px;
+        padding: 0 16px;
+      }
+
+      .search-pill input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font: inherit;
+        outline: 0;
+      }
+
+      .search-pill input::placeholder {
+        color: var(--mute);
+        opacity: 1;
+      }
+
+      .search-pill:focus-within {
+        background: var(--canvas);
+        box-shadow:
+          0 0 0 2px var(--ink),
+          0 0 0 12px var(--soft-cloud);
+      }
+
+      .icon-link {
+        width: 40px;
+        height: 40px;
+        display: inline-grid;
+        place-items: center;
+        background: var(--soft-cloud);
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .campaign {
+        padding-top: var(--section);
+      }
+
+      .campaign-tile {
+        position: relative;
+        min-height: clamp(520px, 74vh, 780px);
+        overflow: hidden;
+        background: var(--ink);
+        isolation: isolate;
+      }
+
+      .campaign-tile::after {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        content: "";
+        background:
+          linear-gradient(
+            90deg,
+            rgba(17, 17, 17, 0.82) 0%,
+            rgba(17, 17, 17, 0.36) 48%,
+            rgba(17, 17, 17, 0.06) 100%
+          );
+      }
+
+      .campaign-tile img {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 18%;
+      }
+
+      .campaign-copy {
+        position: absolute;
+        left: clamp(24px, 5vw, 72px);
+        bottom: clamp(24px, 5vw, 72px);
+        z-index: 2;
+        width: min(680px, calc(100% - 48px));
+        color: var(--canvas);
       }
 
       .eyebrow {
-        margin: 0 0 1rem;
-        color: var(--accent-strong);
-        font-size: 0.92rem;
-        font-weight: 700;
+        margin: 0 0 12px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
       }
 
       h1,
       h2,
-      h3 {
-        line-height: 1.15;
-        margin: 0;
+      h3,
+      p {
+        margin-top: 0;
       }
 
       h1 {
-        max-width: 12ch;
-        font-size: clamp(2.7rem, 8vw, 5.7rem);
+        max-width: 8ch;
+        margin-bottom: 18px;
+        font-family: var(--display);
+        font-size: clamp(64px, 10vw, 128px);
+        font-weight: 500;
+        line-height: 0.9;
+        letter-spacing: 0;
+        text-transform: uppercase;
       }
 
       h2 {
-        font-size: clamp(1.65rem, 3vw, 2.45rem);
+        margin-bottom: 0;
+        font-size: clamp(24px, 3vw, 32px);
+        font-weight: 500;
+        line-height: 1.2;
       }
 
       h3 {
-        font-size: 1.05rem;
+        margin-bottom: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.75;
       }
 
-      .lead {
-        max-width: 62ch;
-        margin: 1.4rem 0 0;
-        color: var(--muted);
-        font-size: clamp(1.05rem, 2vw, 1.2rem);
-      }
-
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 2rem;
+      .campaign-lead {
+        max-width: 54ch;
+        margin-bottom: 24px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 16px;
       }
 
       .button {
+        min-height: 48px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 44px;
-        border: 1px solid var(--accent-strong);
-        border-radius: 8px;
-        padding: 0.72rem 1rem;
-        font-weight: 700;
+        border: 1px solid transparent;
+        border-radius: 9999px;
+        padding: 12px 32px;
+        font-weight: 500;
+        line-height: 1.5;
         text-decoration: none;
+        transition:
+          opacity 160ms ease,
+          transform 160ms ease;
+      }
+
+      .button:active {
+        opacity: 0.5;
+        transform: scale(0.96);
       }
 
       .button.primary {
-        background: var(--accent-strong);
-        color: #fff;
+        background: var(--ink);
+        color: var(--canvas);
       }
 
       .button.secondary {
-        background: transparent;
-        color: var(--accent-strong);
+        background: var(--soft-cloud);
+        color: var(--ink);
       }
 
-      .profile-frame {
-        border-radius: 8px;
-        background: var(--surface);
-        box-shadow: var(--shadow);
-        overflow: hidden;
+      .button.on-image {
+        background: var(--canvas);
+        color: var(--ink);
       }
 
-      .profile-frame img {
-        width: 100%;
-        aspect-ratio: 4 / 5;
-        object-fit: cover;
+      .quick-filter {
+        padding: 24px 0 0;
       }
 
-      .section {
-        border-top: 1px solid var(--line);
-        padding: clamp(2.5rem, 6vw, 4.5rem) 0;
-      }
-
-      .section-grid {
-        display: grid;
-        grid-template-columns: minmax(180px, 0.42fr) minmax(0, 1fr);
-        gap: clamp(1.5rem, 5vw, 4rem);
-      }
-
-      .section-title p {
-        margin: 0.75rem 0 0;
-        color: var(--muted);
-      }
-
-      .text-stack {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .text-stack p {
-        margin: 0;
-      }
-
-      .focus-list,
-      .link-grid {
-        list-style: none;
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         margin: 0;
         padding: 0;
+        list-style: none;
       }
 
-      .focus-list {
+      .chip {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--hairline);
+        border-radius: 9999px;
+        padding: 8px 16px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .chip.active {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--canvas);
+      }
+
+      .content-section {
+        padding-top: var(--section);
+      }
+
+      .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .section-kicker {
+        margin: 0 0 4px;
+        color: var(--mute);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .section-link {
+        font-weight: 500;
+      }
+
+      .profile-layout {
         display: grid;
-        gap: 0.9rem;
+        grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
+        gap: clamp(24px, 6vw, 80px);
       }
 
-      .focus-list li {
-        border-left: 4px solid var(--accent);
-        background: var(--surface);
-        padding: 1rem 1.1rem;
+      .meta-list {
+        margin: 0;
+        border-top: 1px solid var(--hairline);
       }
 
-      .link-grid {
+      .meta-row {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 16px;
+        border-bottom: 1px solid var(--hairline);
+        padding: 18px 0;
+      }
+
+      .meta-row dt {
+        color: var(--mute);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .meta-row dd {
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .about-copy {
+        display: grid;
+        gap: 18px;
+        color: var(--charcoal);
+        font-size: clamp(18px, 2vw, 24px);
+        line-height: 1.35;
+      }
+
+      .about-copy p {
+        max-width: 66ch;
+        margin-bottom: 0;
+      }
+
+      .product-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
       }
 
-      .link-card {
-        min-height: 100%;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface);
-        padding: 1.2rem;
+      .product-card {
+        min-width: 0;
+        background: var(--canvas);
       }
 
-      .link-card p {
-        margin: 0.7rem 0 1rem;
-        color: var(--muted);
-      }
-
-      .link-card a {
-        font-weight: 700;
-      }
-
-      .resume-panel {
+      .product-media {
+        position: relative;
+        aspect-ratio: 1;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1.5rem;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface);
-        padding: clamp(1.25rem, 4vw, 2rem);
+        align-items: flex-end;
+        overflow: hidden;
+        background: var(--soft-cloud);
+        padding: 24px;
       }
 
-      .resume-panel p {
-        max-width: 58ch;
-        margin: 0.6rem 0 0;
-        color: var(--muted);
+      .product-media.dark {
+        background: var(--ink);
+        color: var(--canvas);
+      }
+
+      .product-media.wordmark {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .display-word {
+        font-family: var(--display);
+        font-size: clamp(56px, 8vw, 112px);
+        font-weight: 500;
+        line-height: 0.86;
+        text-transform: uppercase;
+      }
+
+      .badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        border: 1px solid var(--hairline);
+        border-radius: 9999px;
+        background: var(--canvas);
+        color: var(--ink);
+        padding: 4px 12px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .product-meta {
+        padding-top: 12px;
+      }
+
+      .swatches {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .swatch {
+        width: 12px;
+        height: 12px;
+        border: 1px solid var(--hairline);
+        border-radius: 9999px;
+        background: var(--ink);
+      }
+
+      .swatch.soft {
+        background: var(--soft-cloud);
+      }
+
+      .swatch.teal {
+        background: var(--accent-teal);
+      }
+
+      .swatch.pink {
+        background: var(--accent-pink);
+      }
+
+      .product-meta p {
+        margin-bottom: 8px;
+        color: var(--mute);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .product-meta a {
+        font-weight: 500;
+      }
+
+      .disclosure-list {
+        border-top: 1px solid var(--hairline);
+      }
+
+      .disclosure-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 24px;
+        border-bottom: 1px solid var(--hairline);
+        padding: 24px 0;
+        text-decoration: none;
+      }
+
+      .disclosure-row span:first-child {
+        font-weight: 500;
+      }
+
+      .disclosure-row span:nth-child(2) {
+        color: var(--mute);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .resume-tile {
+        position: relative;
+        min-height: 340px;
+        display: grid;
+        align-items: end;
+        overflow: hidden;
+        background: var(--ink);
+        color: var(--canvas);
+        padding: clamp(24px, 5vw, 56px);
+      }
+
+      .resume-tile img {
+        position: absolute;
+        inset: 0 0 0 auto;
+        width: min(58%, 760px);
+        height: 100%;
+        object-fit: cover;
+        object-position: center 18%;
+        opacity: 0.38;
+        filter: grayscale(1) contrast(1.08);
+      }
+
+      .resume-copy {
+        position: relative;
+        z-index: 1;
+        width: min(620px, 100%);
+      }
+
+      .resume-copy p {
+        max-width: 54ch;
+        margin: 12px 0 24px;
+        color: var(--stone);
+      }
+
+      .resume-copy .section-kicker {
+        margin: 0 0 4px;
+        color: var(--stone);
       }
 
       .site-footer {
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        padding: 1.5rem 0 2rem;
+        margin-top: var(--section);
+        border-top: 1px solid var(--hairline);
+        color: var(--mute);
       }
 
-      .footer-inner {
-        width: min(100% - 2rem, var(--max-width));
-        margin: 0 auto;
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 32px;
+        padding: 32px var(--gutter);
+      }
+
+      .footer-column h2 {
+        margin-bottom: 12px;
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .footer-column ul {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .footer-column a {
+        color: var(--mute);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      .fine-print {
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: 24px;
+        border-top: 1px solid var(--hairline-soft);
+        padding: 16px var(--gutter) 24px;
+        font-size: 9px;
+        font-weight: 500;
+        line-height: 1.75;
       }
 
-      @media (max-width: 820px) {
-        .nav {
-          align-items: flex-start;
-          flex-direction: column;
+      @media (max-width: 960px) {
+        .utility-left,
+        .search-pill {
+          display: none;
         }
 
-        .nav ul {
-          flex-wrap: wrap;
+        .primary-nav {
+          grid-template-columns: auto 1fr auto;
         }
 
-        .hero,
-        .section-grid {
-          grid-template-columns: 1fr;
+        .nav-links {
+          justify-content: flex-start;
+          gap: 18px;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+        .nav-links::-webkit-scrollbar {
+          display: none;
+        }
+
+        .profile-layout,
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .product-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 599px) {
+        .utility-inner {
+          justify-content: flex-end;
+        }
+
+        .utility-links {
+          gap: 12px;
+        }
+
+        .primary-nav {
+          min-height: 56px;
+          gap: 12px;
+        }
+
+        .brand-mark {
+          width: 36px;
+          height: 36px;
+        }
+
+        .nav-links {
+          gap: 16px;
+        }
+
+        .campaign {
+          padding-top: 0;
+        }
+
+        .campaign-tile {
+          min-height: 72vh;
+        }
+
+        .campaign-tile::after {
+          background: rgba(17, 17, 17, 0.58);
         }
 
         h1 {
-          max-width: 10ch;
+          font-size: clamp(48px, 18vw, 72px);
         }
 
-        .profile-frame {
-          max-width: 420px;
+        .section-head,
+        .fine-print {
+          align-items: flex-start;
+          flex-direction: column;
         }
 
-        .link-grid {
+        .profile-layout,
+        .product-grid,
+        .footer-grid {
           grid-template-columns: 1fr;
         }
 
-        .resume-panel,
-        .footer-inner {
-          align-items: flex-start;
-          flex-direction: column;
+        .product-media {
+          min-height: 280px;
+        }
+
+        .resume-tile {
+          min-height: 420px;
+        }
+
+        .resume-tile img {
+          width: 100%;
+          opacity: 0.28;
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
+        }
+
+        .button {
+          transition: none;
         }
       }
     </style>
@@ -352,50 +776,92 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-      <nav class="nav" aria-label="Primary navigation">
-        <a class="brand" href="#main">Lee Seojun</a>
-        <ul>
-          <li><a href="#about">About</a></li>
+      <div class="utility-bar">
+        <div class="utility-inner frame">
+          <span class="utility-left">HILEE0941.github.io</span>
+          <div class="utility-links" aria-label="Utility links">
+            <a href="https://github.com/HILEE0941" rel="me">GitHub</a>
+            <a href="assets/cv.pdf">CV</a>
+            <a href="#links">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="primary-nav frame" aria-label="Primary navigation">
+        <a class="brand-mark" href="#main" aria-label="Lee Seojun home">LS</a>
+        <ul class="nav-links">
+          <li><a href="#about" aria-current="page">About</a></li>
           <li><a href="#focus">Focus</a></li>
           <li><a href="#links">Links</a></li>
           <li><a href="#resume">CV</a></li>
         </ul>
+        <div class="nav-actions">
+          <form class="search-pill" action="#links" role="search">
+            <label class="visually-hidden" for="site-search">Search profile</label>
+            <input id="site-search" name="q" type="search" placeholder="Search">
+          </form>
+          <a class="icon-link" href="assets/cv.pdf" aria-label="Open CV">CV</a>
+        </div>
       </nav>
     </header>
 
     <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
-        <div>
-          <p class="eyebrow">@HILEE0941</p>
-          <h1 id="hero-title">Lee Seojun</h1>
-          <p class="lead">
-            A personal home for my profile, selected work, and CV. I care about
-            clear interfaces, reliable tools, and software that is easy to keep
-            improving.
-          </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="assets/cv.pdf">View CV</a>
-            <a class="button secondary" href="#links">See Links</a>
-          </div>
-        </div>
-
-        <div class="profile-frame">
+      <div class="campaign frame">
+        <section class="campaign-tile" aria-labelledby="hero-title">
           <img
             src="assets/profile.jpg"
             alt="Portrait of Lee Seojun"
             width="720"
             height="900"
           >
-        </div>
+          <div class="campaign-copy">
+            <p class="eyebrow">Personal profile / @HILEE0941</p>
+            <h1 id="hero-title">Lee Seojun</h1>
+            <p class="campaign-lead">
+              A personal home for my profile, selected work, and CV. I care
+              about clear interfaces, reliable tools, and software that is easy
+              to keep improving.
+            </p>
+            <a class="button on-image" href="assets/cv.pdf">View CV</a>
+          </div>
+        </section>
+      </div>
+
+      <section class="quick-filter frame" aria-label="Profile topics">
+        <ul class="chip-row">
+          <li class="chip active">Profile</li>
+          <li class="chip">Web Experiences</li>
+          <li class="chip">Useful Tools</li>
+          <li class="chip">Documentation</li>
+          <li class="chip">CV</li>
+        </ul>
       </section>
 
-      <section class="section" id="about" aria-labelledby="about-title">
-        <div class="section-grid">
-          <div class="section-title">
+      <section class="content-section frame" id="about" aria-labelledby="about-title">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Short profile</p>
             <h2 id="about-title">About</h2>
-            <p>Short profile</p>
           </div>
-          <div class="text-stack">
+        </div>
+
+        <div class="profile-layout">
+          <dl class="meta-list">
+            <div class="meta-row">
+              <dt>Handle</dt>
+              <dd>@HILEE0941</dd>
+            </div>
+            <div class="meta-row">
+              <dt>Site</dt>
+              <dd>Personal page</dd>
+            </div>
+            <div class="meta-row">
+              <dt>Document</dt>
+              <dd><a href="assets/cv.pdf">CV PDF</a></dd>
+            </div>
+          </dl>
+
+          <div class="about-copy">
             <p>
               Hello, I am Lee Seojun. This site is a simple place to introduce
               myself and keep important links easy to find.
@@ -408,85 +874,147 @@
         </div>
       </section>
 
-      <section class="section" id="focus" aria-labelledby="focus-title">
-        <div class="section-grid">
-          <div class="section-title">
-            <h2 id="focus-title">Focus</h2>
-            <p>What I work on</p>
-          </div>
-          <ul class="focus-list">
-            <li>
-              <h3>Web Experiences</h3>
-              <p>
-                Responsive pages and interfaces that work well across devices.
-              </p>
-            </li>
-            <li>
-              <h3>Useful Tools</h3>
-              <p>
-                Small, dependable software that supports real workflows.
-              </p>
-            </li>
-            <li>
-              <h3>Clear Documentation</h3>
-              <p>
-                Notes and project summaries that make work easier to understand.
-              </p>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="links" aria-labelledby="links-title">
-        <div class="section-grid">
-          <div class="section-title">
-            <h2 id="links-title">Links</h2>
-            <p>Selected destinations</p>
-          </div>
-          <ul class="link-grid">
-            <li>
-              <article class="link-card">
-                <h3>GitHub</h3>
-                <p>Code, experiments, and public repositories.</p>
-                <a href="https://github.com/HILEE0941" rel="me">Visit GitHub</a>
-              </article>
-            </li>
-            <li>
-              <article class="link-card">
-                <h3>CV</h3>
-                <p>A downloadable PDF version of my resume.</p>
-                <a href="assets/cv.pdf">Open CV</a>
-              </article>
-            </li>
-            <li>
-              <article class="link-card">
-                <h3>Contact</h3>
-                <p>Use the contact details listed in my CV.</p>
-                <a href="assets/cv.pdf">View Details</a>
-              </article>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="resume" aria-labelledby="resume-title">
-        <div class="resume-panel">
+      <section class="content-section frame" id="focus" aria-labelledby="focus-title">
+        <div class="section-head">
           <div>
+            <p class="section-kicker">Selected focus</p>
+            <h2 id="focus-title">What I Work On</h2>
+          </div>
+          <a class="section-link" href="#links">See links</a>
+        </div>
+
+        <ul class="product-grid">
+          <li>
+            <article class="product-card">
+              <div class="product-media wordmark">
+                <span class="badge">Focus</span>
+                <span class="display-word">Web</span>
+              </div>
+              <div class="product-meta">
+                <div class="swatches" aria-hidden="true">
+                  <span class="swatch"></span>
+                  <span class="swatch soft"></span>
+                  <span class="swatch teal"></span>
+                </div>
+                <h3>Web Experiences</h3>
+                <p>Responsive pages and interfaces that work well across devices.</p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="product-card">
+              <div class="product-media wordmark dark">
+                <span class="badge">Tools</span>
+                <span class="display-word">Build</span>
+              </div>
+              <div class="product-meta">
+                <div class="swatches" aria-hidden="true">
+                  <span class="swatch"></span>
+                  <span class="swatch teal"></span>
+                  <span class="swatch pink"></span>
+                </div>
+                <h3>Useful Tools</h3>
+                <p>Small, dependable software that supports real workflows.</p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="product-card">
+              <div class="product-media wordmark">
+                <span class="badge">Notes</span>
+                <span class="display-word">Docs</span>
+              </div>
+              <div class="product-meta">
+                <div class="swatches" aria-hidden="true">
+                  <span class="swatch soft"></span>
+                  <span class="swatch"></span>
+                  <span class="swatch teal"></span>
+                </div>
+                <h3>Clear Documentation</h3>
+                <p>Notes and project summaries that make work easier to understand.</p>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+
+      <section class="content-section frame" id="links" aria-labelledby="links-title">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Selected destinations</p>
+            <h2 id="links-title">Links</h2>
+          </div>
+        </div>
+
+        <div class="disclosure-list">
+          <a class="disclosure-row" href="https://github.com/HILEE0941" rel="me">
+            <span>GitHub</span>
+            <span>Code and public repositories</span>
+          </a>
+          <a class="disclosure-row" href="assets/cv.pdf">
+            <span>CV</span>
+            <span>Open PDF</span>
+          </a>
+          <a class="disclosure-row" href="assets/cv.pdf">
+            <span>Contact</span>
+            <span>Details listed in CV</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="content-section frame" id="resume" aria-labelledby="resume-title">
+        <div class="resume-tile">
+          <img
+            src="assets/profile.jpg"
+            alt=""
+            width="720"
+            height="900"
+            loading="lazy"
+          >
+          <div class="resume-copy">
+            <p class="section-kicker">Document</p>
             <h2 id="resume-title">CV</h2>
             <p>
               My resume is available as a PDF and can be opened directly in the
               browser or downloaded for later.
             </p>
+            <a class="button on-image" href="assets/cv.pdf" download>Download CV</a>
           </div>
-          <a class="button primary" href="assets/cv.pdf" download>Download CV</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="footer-inner">
+      <div class="footer-grid frame">
+        <section class="footer-column" aria-labelledby="footer-profile">
+          <h2 id="footer-profile">Profile</h2>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#focus">Focus</a></li>
+          </ul>
+        </section>
+        <section class="footer-column" aria-labelledby="footer-docs">
+          <h2 id="footer-docs">Documents</h2>
+          <ul>
+            <li><a href="assets/cv.pdf">CV PDF</a></li>
+          </ul>
+        </section>
+        <section class="footer-column" aria-labelledby="footer-elsewhere">
+          <h2 id="footer-elsewhere">Elsewhere</h2>
+          <ul>
+            <li><a href="https://github.com/HILEE0941" rel="me">GitHub</a></li>
+          </ul>
+        </section>
+        <section class="footer-column" aria-labelledby="footer-contact">
+          <h2 id="footer-contact">Contact</h2>
+          <ul>
+            <li><a href="assets/cv.pdf">See CV</a></li>
+          </ul>
+        </section>
+      </div>
+      <div class="fine-print frame">
         <span>&copy; 2026 Lee Seojun</span>
-        <span>Built with plain HTML and CSS.</span>
+        <span>HILEE0941.github.io</span>
       </div>
     </footer>
   </body>
